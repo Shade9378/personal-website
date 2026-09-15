@@ -1,6 +1,4 @@
 # Personal Website
-
-Personal website built with Astro
 ---
 
 ## 1. Running the Website Locally
