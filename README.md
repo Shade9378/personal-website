@@ -1,5 +1,4 @@
 # Personal Website
----
 
 ## 1. Running the Website Locally
 
