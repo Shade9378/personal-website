@@ -3,6 +3,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../config";
 import updates from "../data/updates.json";
 import { withBase } from "../utils/paths";
+
+const MAX_UPDATES = 9;
+
+// Keep updates.json ordered newest -> oldest.
+const visibleUpdates = updates.slice(0, MAX_UPDATES);
 ---
 
 <BaseLayout title="Anh Vu">
@@ -82,13 +87,18 @@ import { withBase } from "../utils/paths";
     <h2 class="updates-title">Updates</h2>
 
     <div class="updates-list">
-      {updates.map((update) => (
+      {visibleUpdates.map((update) => (
         <article class="update-item">
-          <time class="update-date">{update.date}</time>
+          <time class="update-date">
+            {update.date}
+          </time>
 
           <div class="update-copy">
             <p>
-              {update.message ?? update.title ?? update.description ?? ""}
+              {update.message ??
+                update.title ??
+                update.description ??
+                ""}
 
               {update.linkLabel && update.linkHref && (
                 <>
