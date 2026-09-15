@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#f3eee7"/>
+  <rect x="78" y="75" width="1044" height="525" rx="24" fill="white" opacity="0.86"/>
+  <circle cx="142" cy="142" r="10" fill="#111"/>
+  <text x="110" y="300" font-family="Arial, sans-serif" font-size="55" font-weight="600" fill="#111">Tangible Learning + Edge AI</text>
+  <text x="110" y="365" font-family="Arial, sans-serif" font-size="28" fill="#777">camera → detector → interaction</text>
+  <line x1="110" y1="425" x2="1090" y2="425" stroke="#d5d5d5" stroke-width="2"/>
+  <text x="110" y="493" font-family="Arial, sans-serif" font-size="22" fill="#999">Replace this file with your real screenshot / system figure.</text>
+</svg>

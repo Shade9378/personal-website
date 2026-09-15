@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectRow from "../../components/ProjectRow.astro";
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout title="Projects — Anh Vu">
+  <section class="simple-page-heading">
+    <h1>Projects</h1>
+  </section>
+
+  <section class="section no-top-padding">
+    <div class="project-list">
+      {projects.map((project, index) => (
+        <ProjectRow
+          id={project.id}
+          index={index + 1}
+          title={project.data.title}
+          description={project.data.description}
+          year={project.data.year}
+          image={project.data.image}
+          imageAlt={project.data.imageAlt}
+          tags={project.data.tags}
+          links={project.data.links}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

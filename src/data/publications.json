@@ -1,0 +1,28 @@
+[
+  {
+    "year": 6767,
+    "type": "Paper",
+    "title": "A Complete Solution to P = NP Using Three Lines of JavaScript",
+    "authors": "Anh Vu",
+    "venue": "Nature, Science, NeurIPS, CHI, and SIGCSE simultaneously",
+    "links": [
+      {
+        "label": "Abstract",
+        "href": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+    ]
+  },
+  {
+    "year": 2077,
+    "type": "Paper",
+    "title": "Teaching Reinforcement Learning to Dolphins Using a Raspberry Pi Zero on Neptune",
+    "authors": "Anh Vu, Albert Einstein, Alan Turing",
+    "venue": "Neptune Research Station",
+    "links": [
+      {
+        "label": "PDF",
+        "href": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+    ]
+  }
+]

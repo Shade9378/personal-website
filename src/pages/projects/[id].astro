@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const {
+  title,
+  description,
+  year,
+  affiliation,
+  status,
+  image,
+  imageAlt,
+  tags,
+  links,
+} = project.data;
+---
+
+<BaseLayout title={`${title} — Anh Vu`} description={description}>
+  <article class="project-detail">
+    <a href="/projects/" class="back-link">← Projects</a>
+
+    <header class="project-detail-header">
+      <p class="eyebrow">
+        {[affiliation, year, status].filter(Boolean).join(" · ")}
+      </p>
+      <h1>{title}</h1>
+      <p class="project-detail-lead">{description}</p>
+
+      {tags.length > 0 && (
+        <div class="tags">
+          {tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+      )}
+
+      {links.length > 0 && (
+        <div class="hero-links">
+          {links.map((link) => (
+            <a href={link.href} target="_blank" rel="noreferrer">
+              {link.label} <span>↗</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="project-hero-image">
+      <img
+        src={image ?? "/images/project-placeholder.svg"}
+        alt={imageAlt ?? ""}
+      />
+    </div>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

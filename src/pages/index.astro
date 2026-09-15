@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config";
+import updates from "../data/updates.json";
+---
+
+<BaseLayout title="About — Anh Vu">
+  <section class="about-home">
+    <div class="about-home-photo">
+      <img src="/images/anh-vu.jpeg" alt="Anh Vu" />
+    </div>
+
+    <div class="about-home-copy">
+      <p class="eyebrow">About</p>
+
+      <p>
+        I’m a senior at DePauw University, majoring in Computer Science, with minors in Psychology and Mathematics. My research interests are in educational technologies and infrastructure, as well as the problems that arise when such systems are deployed in resource-constrained classroom environments.
+      </p>
+
+      <p>
+        Currently, I am interested in infrastructure and methods for behavioral sensing and multimodal learning analytics, particularly for modeling learner engagement.
+      </p>
+
+      <div class="hero-links">
+        <a href={`mailto:${site.email}`}>Email <span>→</span></a>
+        <a href={site.github} target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+        <a href={site.scholar} target="_blank" rel="noreferrer">Google Scholar <span>↗</span></a>
+        <a href={site.cvUrl} target="_blank" rel="noreferrer">CV <span>↗</span></a>
+      </div>
+
+      <div class="about-section compact-about-section">
+        <h2>Education</h2>
+        <div class="fact-row">
+          <div>
+            <strong>DePauw University</strong>
+            <p>B.A. Computer Science · Minors in Psychology and Mathematics</p>
+          </div>
+          <span>2023–2027</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="updates-section">
+    <h2 class="updates-title">Updates</h2>
+
+    <div class="updates-list">
+      {updates.map((update) => (
+        <article class="update-item">
+          <time class="update-date">{update.date}</time>
+
+          <div class="update-copy">
+            <p>
+              {update.message ?? update.title ?? update.description ?? ""}
+              {update.linkLabel && update.linkHref && (
+                <>
+                  {" "}
+                  <a href={update.linkHref}>{update.linkLabel}</a>.
+                </>
+              )}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

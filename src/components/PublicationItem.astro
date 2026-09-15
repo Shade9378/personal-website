@@ -1,0 +1,36 @@
+---
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  year: number;
+  type: string;
+  title: string;
+  authors: string;
+  venue: string;
+  links?: Link[];
+}
+
+const { year, type, title, authors, venue, links = [] } = Astro.props;
+---
+
+<article class="publication-item">
+  <div class="publication-year">{year}</div>
+  <div class="publication-copy">
+    <div class="eyebrow">{type}</div>
+    <h2>{title}</h2>
+    <p>{authors}</p>
+    <p class="muted">{venue}</p>
+    {links.length > 0 && (
+      <div class="project-links publication-links">
+        {links.map((link) => (
+          <a href={link.href} target="_blank" rel="noreferrer">
+            {link.label} <span>↗</span>
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</article>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PublicationItem from "../components/PublicationItem.astro";
+import publications from "../data/publications.json";
+
+const sorted = [...publications].sort((a, b) => b.year - a.year);
+---
+
+<BaseLayout title="Publications — Anh Vu">
+  <section class="simple-page-heading">
+    <h1>Publications & Posters</h1>
+  </section>
+
+  <section class="publication-list">
+    {sorted.map((publication) => (
+      <PublicationItem {...publication} />
+    ))}
+  </section>
+</BaseLayout>

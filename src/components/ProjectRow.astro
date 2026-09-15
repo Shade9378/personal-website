@@ -1,0 +1,66 @@
+---
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  id: string;
+  index: number;
+  title: string;
+  description: string;
+  year: number;
+  image?: string;
+  imageAlt?: string;
+  tags?: string[];
+  links?: Link[];
+}
+
+const {
+  id,
+  index,
+  title,
+  description,
+  year,
+  image,
+  imageAlt = "",
+  tags = [],
+  links = [],
+} = Astro.props;
+---
+
+<article class="project-row reveal">
+  <div class="project-index">{String(index).padStart(2, "0")}</div>
+
+  <a class="project-image-link" href={`/projects/${id}/`} aria-label={`Read about ${title}`}>
+    <div class="project-image-wrap">
+      <img
+        src={image ?? "/images/project-placeholder.svg"}
+        alt={imageAlt}
+        class="project-image"
+        loading="lazy"
+      />
+    </div>
+  </a>
+
+  <div class="project-copy">
+    <div class="project-meta">{year}</div>
+    <h2><a href={`/projects/${id}/`}>{title}</a></h2>
+    <p>{description}</p>
+
+    {tags.length > 0 && (
+      <div class="tags" aria-label="Project topics">
+        {tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+    )}
+
+    <div class="project-links">
+      <a href={`/projects/${id}/`}>Project page <span>→</span></a>
+      {links.map((link) => (
+        <a href={link.href} target="_blank" rel="noreferrer">
+          {link.label} <span>↗</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</article>
