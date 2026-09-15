@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBase } from "../../utils/paths";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -13,6 +14,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+
 const {
   title,
   description,
@@ -24,29 +26,48 @@ const {
   tags,
   links,
 } = project.data;
+
+const projectImage = withBase(
+  image ?? "/images/project-placeholder.png"
+);
 ---
 
-<BaseLayout title={`${title} — Anh Vu`} description={description}>
+<BaseLayout
+  title={`${title} — Anh Vu`}
+  description={description}
+>
   <article class="project-detail">
-    <a href="/projects/" class="back-link">← Projects</a>
+    <a href={withBase("/projects/")} class="back-link">
+      ← Projects
+    </a>
 
     <header class="project-detail-header">
       <p class="eyebrow">
         {[affiliation, year, status].filter(Boolean).join(" · ")}
       </p>
+
       <h1>{title}</h1>
-      <p class="project-detail-lead">{description}</p>
+
+      <p class="project-detail-lead">
+        {description}
+      </p>
 
       {tags.length > 0 && (
         <div class="tags">
-          {tags.map((tag) => <span class="tag">{tag}</span>)}
+          {tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
         </div>
       )}
 
       {links.length > 0 && (
         <div class="hero-links">
           {links.map((link) => (
-            <a href={link.href} target="_blank" rel="noreferrer">
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+            >
               {link.label} <span>↗</span>
             </a>
           ))}
@@ -56,7 +77,7 @@ const {
 
     <div class="project-hero-image">
       <img
-        src={image ?? "/images/project-placeholder.svg"}
+        src={projectImage}
         alt={imageAlt ?? ""}
       />
     </div>

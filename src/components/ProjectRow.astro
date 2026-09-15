@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../utils/paths";
+
 interface Link {
   label: string;
   href: string;
@@ -27,15 +29,24 @@ const {
   tags = [],
   links = [],
 } = Astro.props;
+
+const projectUrl = withBase(`/projects/${id}/`);
+const projectImage = withBase(
+  image ?? "/images/project-placeholder.png"
+);
 ---
 
 <article class="project-row reveal">
   <div class="project-index">{String(index).padStart(2, "0")}</div>
 
-  <a class="project-image-link" href={`/projects/${id}/`} aria-label={`Read about ${title}`}>
+  <a
+    class="project-image-link"
+    href={projectUrl}
+    aria-label={`Read about ${title}`}
+  >
     <div class="project-image-wrap">
       <img
-        src={image ?? "/images/project-placeholder.svg"}
+        src={projectImage}
         alt={imageAlt}
         class="project-image"
         loading="lazy"
@@ -45,7 +56,11 @@ const {
 
   <div class="project-copy">
     <div class="project-meta">{year}</div>
-    <h2><a href={`/projects/${id}/`}>{title}</a></h2>
+
+    <h2>
+      <a href={projectUrl}>{title}</a>
+    </h2>
+
     <p>{description}</p>
 
     {tags.length > 0 && (
@@ -55,7 +70,10 @@ const {
     )}
 
     <div class="project-links">
-      <a href={`/projects/${id}/`}>Project page <span>→</span></a>
+      <a href={projectUrl}>
+        Project page <span>→</span>
+      </a>
+
       {links.map((link) => (
         <a href={link.href} target="_blank" rel="noreferrer">
           {link.label} <span>↗</span>
