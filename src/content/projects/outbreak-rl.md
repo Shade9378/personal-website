@@ -1,33 +1,23 @@
 ---
-title: "Associative Retrieval and Resource-Aware Planning in Resident Evil Outbreak File #2"
-shortTitle: "Associative Retrieval for Long-Horizon Decision-Making"
-description: "An empirical study of memory retrieval and resource-aware planning for long-horizon decision-making in a survival-game environment."
-year: 2026
+title: "Reinforcement Learning for Resident Evil Outbreak File #2 - Multiple Projects"
+shortTitle: "Reinforcement Learning for Resident Evil Outbreak File #2"
+description: "A Gym environment and a reinforcement learning gameplay agent for Resident Evil Outbreak File #2."
 order: 4
+category: current
 featured: false
-status: "Exploratory"
-affiliation: "Independent research"
 image: "/images/outbreak-rl.png"
 imageAlt: "Abstract graph illustration representing long-horizon memory and planning"
 tags:
+  - Reverse Engineering
   - Reinforcement Learning
-  - Memory
-  - Planning
 links: []
+subprojects:
+  - title: "Gym Environment for Resident Evil Outbreak File #2"
+    links:
+      - label: GitHub
+        href: ""
+  - title: "Reinforcement Learning Gameplay Agent for Resident Evil Outbreak File #2"
+    links:
+      - label: GitHub
+        href: ""
 ---
-
-## Research question
-
-This project did sth idk
-
-## Initial formulation
-
-Formulation sth sth idk
-
-## Architecture
-
-Idk
-
-## Next steps
-
-Idk i just got here

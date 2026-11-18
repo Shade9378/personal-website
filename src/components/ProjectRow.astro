@@ -11,9 +11,10 @@ interface Props {
   index: number;
   title: string;
   description: string;
-  year: number;
+  year?: number | string;
   image?: string;
   imageAlt?: string;
+  screenshot?: boolean;
   tags?: string[];
   links?: Link[];
 }
@@ -26,25 +27,29 @@ const {
   year,
   image,
   imageAlt = "",
+  screenshot = false,
   tags = [],
   links = [],
 } = Astro.props;
 
 const projectUrl = withBase(`/projects/${id}/`);
-const projectImage = withBase(
-  image ?? "/images/project-placeholder.png"
-);
+const projectImage = image ? withBase(image) : undefined;
 ---
 
-<article class="project-row reveal">
+<article
+  class="project-row reveal"
+  data-project
+  data-search={[id, title, description, ...tags].join(" ").toLowerCase()}
+  data-tags={JSON.stringify(tags)}
+>
   <div class="project-index">{String(index).padStart(2, "0")}</div>
 
-  <a
+  {projectImage && <a
     class="project-image-link"
     href={projectUrl}
     aria-label={`Read about ${title}`}
   >
-    <div class="project-image-wrap">
+    <div class:list={["project-image-wrap", { "project-screenshot": screenshot }]}>
       <img
         src={projectImage}
         alt={imageAlt}
@@ -52,14 +57,14 @@ const projectImage = withBase(
         loading="lazy"
       />
     </div>
-  </a>
+  </a>}
 
-  <div class="project-copy">
-    <div class="project-meta">{year}</div>
+  <div class:list={["project-copy", { "project-copy--text-only": !projectImage }]}>
+    {year && <div class="project-meta">{year}</div>}
 
-    <h2>
+    <h3>
       <a href={projectUrl}>{title}</a>
-    </h2>
+    </h3>
 
     <p>{description}</p>
 
@@ -74,7 +79,7 @@ const projectImage = withBase(
         Project page <span>→</span>
       </a>
 
-      {links.map((link) => (
+      {links.filter((link) => link.href).map((link) => (
         <a href={link.href} target="_blank" rel="noreferrer">
           {link.label} <span>↗</span>
         </a>

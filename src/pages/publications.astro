@@ -4,16 +4,29 @@ import PublicationItem from "../components/PublicationItem.astro";
 import publications from "../data/publications.json";
 
 const sorted = [...publications].sort((a, b) => b.year - a.year);
+const sections = [
+  { id: "publications", title: "Publications", entries: sorted.filter((entry) => entry.type !== "Poster") },
+  { id: "posters", title: "Posters", entries: sorted.filter((entry) => entry.type === "Poster") },
+];
 ---
 
-<BaseLayout title="Publications — Anh Vu">
+<BaseLayout title="Publications - Anh Vu">
   <section class="simple-page-heading">
     <h1>Publications & Posters</h1>
   </section>
 
-  <section class="publication-list">
-    {sorted.map((publication) => (
-      <PublicationItem {...publication} />
-    ))}
-  </section>
+  {sections.map((section) => (
+    <section class="section no-top-padding" aria-labelledby={section.id}>
+      <div class="section-heading">
+        <h2 id={section.id}>{section.title}</h2>
+      </div>
+      {section.entries.length > 0 ? (
+        <div class="publication-list">
+          {section.entries.map((publication) => <PublicationItem {...publication} />)}
+        </div>
+      ) : (
+        <p class="muted">No publications listed yet.</p>
+      )}
+    </section>
+  ))}
 </BaseLayout>

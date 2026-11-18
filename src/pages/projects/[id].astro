@@ -18,22 +18,23 @@ const { Content } = await render(project);
 const {
   title,
   description,
+  abstract,
   year,
-  affiliation,
-  status,
+  category,
   image,
   imageAlt,
+  gallery,
+  subprojects,
   tags,
+  contributors = ["Anh Vu"],
   links,
 } = project.data;
 
-const projectImage = withBase(
-  image ?? "/images/project-placeholder.png"
-);
+const projectImage = image ? withBase(image) : undefined;
 ---
 
 <BaseLayout
-  title={`${title} — Anh Vu`}
+  title={`${title} - Anh Vu`}
   description={description}
 >
   <article class="project-detail">
@@ -43,7 +44,7 @@ const projectImage = withBase(
 
     <header class="project-detail-header">
       <p class="eyebrow">
-        {[affiliation, year, status].filter(Boolean).join(" · ")}
+        {[year, category === "past" ? "Past project" : "In progress"].filter(Boolean).join(" · ")}
       </p>
 
       <h1>{title}</h1>
@@ -60,27 +61,99 @@ const projectImage = withBase(
         </div>
       )}
 
+      {contributors.length > 0 && (
+        <section class="project-contributors" aria-labelledby="contributors-heading">
+          <h2 id="contributors-heading">Contributors</h2>
+          <div>{contributors.map((contributor) => <p>{contributor}</p>)}</div>
+        </section>
+      )}
+
       {links.length > 0 && (
         <div class="hero-links">
-          {links.map((link) => (
+          {links.map((link) => link.href ? (
             <a
-              href={link.href}
+              href={withBase(link.href)}
               target="_blank"
               rel="noreferrer"
             >
               {link.label} <span>↗</span>
             </a>
+          ) : (
+            <span class="project-link-placeholder" role="link" aria-disabled="true" title="Link coming soon">{link.label}</span>
           ))}
         </div>
       )}
     </header>
 
-    <div class="project-hero-image">
+    {projectImage && subprojects.length === 0 && <div class="project-hero-image">
       <img
         src={projectImage}
         alt={imageAlt ?? ""}
       />
-    </div>
+    </div>}
+
+    {abstract && (
+      <section class="prose" aria-labelledby="project-abstract">
+        <h2 id="project-abstract">Abstract</h2>
+        <p>{abstract}</p>
+      </section>
+    )}
+
+    {gallery.length > 0 && (
+      <div class:list={["project-gallery", { "project-gallery--compact": project.id === "physio-stress-det" }]}>
+        {gallery.map((item) => (
+          <figure>
+            <img src={withBase(item.src)} alt={item.alt} loading="lazy" />
+            <figcaption>{item.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+    )}
+
+    {subprojects.map((subproject, index) => (
+      <section class="subproject" aria-labelledby={`subproject-${index + 1}`}>
+        <h2 id={`subproject-${index + 1}`}>{subproject.title}</h2>
+        {subproject.links.length > 0 && (
+          <div class="hero-links subproject-links">
+            {subproject.links.map((link) => link.href ? (
+              <a href={withBase(link.href)} target="_blank" rel="noreferrer">{link.label} <span>↗</span></a>
+            ) : (
+              <span class="project-link-placeholder" role="link" aria-disabled="true" title="Link coming soon">{link.label}</span>
+            ))}
+          </div>
+        )}
+        {subproject.description && (
+          <p class="subproject-description">{subproject.description}</p>
+        )}
+        {subproject.notice && <aside class="project-notice"><strong>!!! NOTE</strong>: {subproject.notice}</aside>}
+        {(subproject.contributors ?? []).length > 0 && (
+          <section class="project-contributors subproject-contributors" aria-labelledby={`subproject-${index + 1}-contributors`}>
+            <h3 id={`subproject-${index + 1}-contributors`}>Contributors</h3>
+            <ul>
+              {subproject.contributors.map((contributor) => <li>{contributor}</li>)}
+            </ul>
+          </section>
+        )}
+        {subproject.abstract && (
+          <div class="subproject-abstract">
+            <h3>Abstract</h3>
+            <p>{subproject.abstract}</p>
+          </div>
+        )}
+        {subproject.gallery.length > 0 && (
+          <div class="project-gallery">
+            {subproject.gallery.map((item) => (
+              <figure>
+                <a href={withBase(item.src)} target="_blank" rel="noreferrer" aria-label={`View full-size image: ${item.alt}`}>
+                  <img src={withBase(item.src)} alt={item.alt} loading="lazy" />
+                </a>
+                {item.caption && <figcaption>{item.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        )}
+      </section>
+    ))}
 
     <div class="prose">
       <Content />

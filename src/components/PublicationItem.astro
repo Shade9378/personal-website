@@ -5,24 +5,27 @@ interface Link {
 }
 
 interface Props {
+  id?: string;
   year: number;
   type: string;
   title: string;
   authors: string;
   venue: string;
+  status?: string;
   links?: Link[];
 }
 
-const { year, type, title, authors, venue, links = [] } = Astro.props;
+const { id, year, type, title, authors, venue, status, links = [] } = Astro.props;
 ---
 
-<article class="publication-item">
+<article class="publication-item" id={id}>
   <div class="publication-year">{year}</div>
   <div class="publication-copy">
     <div class="eyebrow">{type}</div>
     <h2>{title}</h2>
-    <p>{authors}</p>
+    <p>{authors.split(/(Vu, A\. D\.|Anh Vu)/).map((part) => (part === "Vu, A. D." || part === "Anh Vu") ? <strong>{part}</strong> : part)}</p>
     <p class="muted">{venue}</p>
+    {status && <p class="muted">{status}</p>}
     {links.length > 0 && (
       <div class="project-links publication-links">
         {links.map((link) => (

@@ -2,20 +2,27 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../config";
 import updates from "../data/updates.json";
+import publications from "../data/publications.json";
 import { withBase } from "../utils/paths";
 
 const MAX_UPDATES = 9;
 
 // Keep updates.json ordered newest -> oldest.
-const visibleUpdates = updates.slice(0, MAX_UPDATES);
+const visibleUpdates = updates.slice(0, MAX_UPDATES).map((update) => ({
+  ...update,
+  parts: update.message.split(/("[^"]+")/).map((text) => {
+    const publication = publications.find((entry) => entry.id && text === `"${entry.title}"`);
+    return { text, href: publication ? withBase(`/publications/#${publication.id}`) : undefined };
+  }),
+}));
 ---
 
 <BaseLayout title="Anh Vu">
   <section class="about-home">
     <div class="about-home-photo">
       <img
-        src={withBase("/images/anh-vu.jpeg")}
-        alt="Anh Vu"
+        src={withBase("/images/avatar.jpg")}
+        alt="Cat wearing a DePauw cap with an explosion in the background"
       />
     </div>
 
@@ -23,17 +30,22 @@ const visibleUpdates = updates.slice(0, MAX_UPDATES);
       <p class="eyebrow">About</p>
 
       <p>
-        I’m a senior at DePauw University, majoring in Computer Science, with
-        minors in Psychology and Mathematics. My research interests are in
-        educational technologies and infrastructure, as well as the problems
-        that arise when such systems are deployed in resource-constrained
-        classroom environments.
+        Hello! I’m Anh Vu (he/him), a senior at DePauw University, majoring in Computer Science, with
+        minors in Psychology and Mathematics.
       </p>
 
       <p>
-        Currently, I am interested in infrastructure and methods for
-        behavioral sensing and multimodal learning analytics, particularly for
-        modeling learner engagement.
+        My research interests are in developing systems and infrastructure to
+        support education in underserved communities. I am interested in
+        investigating how to effectively design and deploy such systems
+        considering the computational resources, connectivity, and infrastructure
+        available in these communities, as well as how students and teachers
+        interact with these technologies and how they affect teaching and
+        learning outcomes.
+      </p>
+
+      <p>
+        Recently, I have also become interested in data-driven intelligent systems that can provide personalized support for students and teachers in both classroom and self-directed learning settings.
       </p>
 
       <div class="hero-links">
@@ -77,7 +89,7 @@ const visibleUpdates = updates.slice(0, MAX_UPDATES);
             </p>
           </div>
 
-          <span>2023–2027</span>
+          <span>2023-2027</span>
         </div>
       </div>
     </div>
@@ -95,10 +107,7 @@ const visibleUpdates = updates.slice(0, MAX_UPDATES);
 
           <div class="update-copy">
             <p>
-              {update.message ??
-                update.title ??
-                update.description ??
-                ""}
+              {update.parts.map((part) => part.href ? <a href={part.href}>{part.text}</a> : part.text)}
 
               {update.linkLabel && update.linkHref && (
                 <>

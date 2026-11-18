@@ -1,27 +1,67 @@
 [
   {
-    "year": 6767,
-    "type": "Paper",
-    "title": "A Complete Solution to P = NP Using Three Lines of JavaScript",
-    "authors": "Anh Vu",
-    "venue": "Nature, Science, NeurIPS, CHI, and SIGCSE simultaneously",
+    "year": 2027,
+    "type": "Poster",
+    "id": "progress-aware-ctf-hints",
+    "title": "Design of Progress-Aware Hint Systems for CTF-Based Cybersecurity Education",
+    "authors": "Vu, A. D. et al.",
+    "venue": "ACM SIGCSE Technical Symposium on Computer Science Education (SIGCSE TS 2027), Sacramento, CA, USA.",
+    "status": "Poster accepted.",
+    "links": []
+  },
+  {
+    "year": 2027,
+    "type": "Poster",
+    "id": "instructor-diagnosis",
+    "title": "Supporting Instructor Diagnosis and Response to Infrastructure Failures in Networked Educational Robotics Activities",
+    "authors": "Vu, A. D.",
+    "venue": "ACM SIGCSE Technical Symposium on Computer Science Education (SIGCSE TS 2027), Sacramento, CA, USA.",
+    "status": "Poster accepted.",
+    "links": []
+  },
+  {
+    "year": 2026,
+    "type": "Poster",
+    "title": "Development of Web-Based Applications for Teaching and Learning in Organic Chemistry",
+    "authors": "Hansen, J., Vu, A. D.",
+    "venue": "American Chemical Society (ACS) Spring Meeting, Atlanta, GA.",
+    "status": "Poster presented, March 2026.",
     "links": [
       {
         "label": "Abstract",
-        "href": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        "href": "https://acs.digitellinc.com/p/s/development-of-web-based-applications-for-teaching-and-learning-in-organic-chemistry-646423"
+      },
+      {
+        "label": "Poster",
+        "href": "https://drive.google.com/file/d/1QfxlIW_IXDgHAjLN6pEw9StMnJCDrzuN/view?usp=drive_link"
       }
     ]
   },
   {
-    "year": 2077,
-    "type": "Paper",
-    "title": "Teaching Reinforcement Learning to Dolphins Using a Raspberry Pi Zero on Neptune",
-    "authors": "Anh Vu, Albert Einstein, Alan Turing",
-    "venue": "Neptune Research Station",
+    "year": 2025,
+    "type": "Poster",
+    "title": "Visualizations and Interactive Resources for Organic Chemistry Education",
+    "authors": "Vu, A. D., Hansen, J.",
+    "venue": "Annual Student Research Poster Session, DePauw University, Greencastle, IN.",
+    "status": "Poster presented, September 2025.",
     "links": [
       {
-        "label": "PDF",
-        "href": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        "label": "Poster",
+        "href": "https://scholarship.depauw.edu/srfposters/215/"
+      }
+    ]
+  },
+  {
+    "year": 2024,
+    "type": "Poster",
+    "title": "E. Textbook for Better Learning in Chemistry 120",
+    "authors": "Vu, A. D., Hansen, J.",
+    "venue": "Annual Student Research Poster Session, DePauw University, Greencastle, IN.",
+    "status": "Poster presented, September 2024.",
+    "links": [
+      {
+        "label": "Poster",
+        "href": "https://scholarship.depauw.edu/srfposters/142/"
       }
     ]
   }

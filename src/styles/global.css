@@ -263,6 +263,83 @@ img {
   letter-spacing: -0.04em;
 }
 
+[data-project-browser] [hidden] {
+  display: none !important;
+}
+
+.project-filters {
+  margin-bottom: 36px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--soft);
+}
+
+.project-filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 16px;
+}
+
+.project-filter-fields label {
+  display: grid;
+  gap: 6px;
+  flex: 1 1 170px;
+  min-width: 0;
+  font-size: 0.82rem;
+  font-weight: 550;
+}
+
+.project-filter-fields .project-search-field {
+  flex: 2 1 280px;
+}
+
+.project-filter-fields input,
+.project-filter-fields select,
+.project-filter-reset {
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.project-filter-fields input,
+.project-filter-fields select {
+  width: 100%;
+  min-width: 0;
+}
+
+.project-filter-fields input:focus-visible,
+.project-filter-fields select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.project-filter-reset {
+  cursor: pointer;
+}
+
+.project-filter-reset:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.project-result-count {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.project-empty-state {
+  padding: 36px 0 60px;
+  color: var(--muted);
+}
+
 .project-list {
   border-top: 1px solid var(--line);
 }
@@ -276,6 +353,46 @@ img {
   border-bottom: 1px solid var(--line);
 }
 
+@media (min-width: 851px) {
+  .project-copy--text-only {
+    grid-column: 2 / -1;
+  }
+}
+
+.project-screenshot .project-image {
+  object-fit: contain;
+}
+
+.project-gallery {
+  display: grid;
+  gap: 32px;
+  margin: 30px 0 60px;
+}
+
+.project-gallery figure {
+  margin: 0;
+}
+
+.project-gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.project-gallery--compact figure {
+  width: min(100%, 320px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.project-gallery figcaption {
+  text-align: center;
+  font-weight: 700;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .project-index,
 .project-meta {
   align-self: start;
@@ -286,23 +403,25 @@ img {
 .project-image-wrap {
   overflow: hidden;
   border-radius: 8px;
-  background: var(--soft);
+  background: #ffffff;
   aspect-ratio: 16 / 9;
 }
 
 .project-image {
+  width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   transition:
     transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1),
     filter var(--transition);
 }
 
 .project-image-link:hover .project-image {
-  transform: scale(1.015);
+  transform: none;
 }
 
-.project-copy h2 {
+.project-copy h3 {
   margin: 4px 0 10px;
   font-size: 1.55rem;
   line-height: 1.16;
@@ -310,11 +429,11 @@ img {
   letter-spacing: -0.035em;
 }
 
-.project-copy h2 a {
+.project-copy h3 a {
   transition: color var(--transition);
 }
 
-.project-copy h2 a:hover {
+.project-copy h3 a:hover {
   color: var(--accent);
 }
 
@@ -900,4 +1019,100 @@ main > section,
   .update-copy {
     padding: 0 0 0 15px;
   }
+}
+
+.subproject {
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+
+.subproject h2 {
+  margin: 0 0 20px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 520;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+}
+
+.subproject-links {
+  margin-bottom: 28px;
+}
+
+.project-link-placeholder {
+  color: var(--muted);
+  cursor: default;
+}
+
+.subproject-abstract {
+  max-width: var(--content-width);
+}
+
+.subproject-abstract h3 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.subproject-abstract p {
+  margin: 0;
+  line-height: 1.75;
+}
+
+.subproject .project-gallery {
+  margin-bottom: 0;
+}
+.project-gallery img[src$="/classroom-support/diagnostic-rules.png"] {
+  width: min(100%, 420px);
+  margin-inline: auto;
+}
+.project-contributors {
+  margin-top: 24px;
+}
+
+.project-contributors h2 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.project-contributors p {
+  margin: 0;
+  color: var(--muted);
+}
+.subproject-description {
+  max-width: var(--content-width);
+  line-height: 1.75;
+}
+
+.subproject-contributors h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.subproject-contributors ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: var(--muted);
+}
+
+.subproject-contributors li + li {
+  margin-top: 4px;
+}
+
+.subproject-contributors + .subproject-abstract {
+  margin-top: 32px;
+}
+
+
+
+
+.project-notice {
+  max-width: var(--content-width);
+  padding: 16px 20px;
+  margin: 20px 0;
+  border-left: 3px solid var(--accent);
+  background: var(--soft);
+  font-size: 0.9rem;
+  line-height: 1.65;
 }

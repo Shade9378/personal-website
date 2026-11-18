@@ -6,28 +6,125 @@ import ProjectRow from "../../components/ProjectRow.astro";
 const projects = (await getCollection("projects")).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const sections = [
+  { id: "current", title: "Current Projects" },
+  { id: "past", title: "Past Projects" },
+];
+const tags = [...new Set(projects.flatMap((project) => project.data.tags))].sort(
+  (a, b) => a.localeCompare(b),
+);
 ---
 
-<BaseLayout title="Projects — Anh Vu">
+<BaseLayout title="Projects - Anh Vu">
   <section class="simple-page-heading">
     <h1>Projects</h1>
   </section>
 
-  <section class="section no-top-padding">
-    <div class="project-list">
-      {projects.map((project, index) => (
-        <ProjectRow
-          id={project.id}
-          index={index + 1}
-          title={project.data.title}
-          description={project.data.description}
-          year={project.data.year}
-          image={project.data.image}
-          imageAlt={project.data.imageAlt}
-          tags={project.data.tags}
-          links={project.data.links}
-        />
-      ))}
-    </div>
-  </section>
+  <div data-project-browser>
+    <form class="project-filters" role="search" aria-label="Search projects" hidden>
+      <div class="project-filter-fields">
+        <label class="project-search-field">
+          Search projects
+          <input name="query" type="search" placeholder="Search titles, descriptions, or tags…" />
+        </label>
+        <label>
+          Status
+          <select name="status">
+            <option value="all">All projects</option>
+            <option value="current">Current projects</option>
+            <option value="past">Past projects</option>
+          </select>
+        </label>
+        <label>
+          Topic / technology
+          <select name="tag">
+            <option value="">All tags</option>
+            {tags.map((tag) => <option value={tag}>{tag}</option>)}
+          </select>
+        </label>
+        <button type="reset" class="project-filter-reset">Clear filters</button>
+      </div>
+      <p class="project-result-count" role="status" aria-live="polite" aria-atomic="true"></p>
+    </form>
+
+    {sections.map((section) => (
+      <section class="section no-top-padding" data-project-section={section.id} aria-labelledby={`${section.id}-projects`}>
+        <div class="section-heading">
+          <h2 id={`${section.id}-projects`}>{section.title}</h2>
+        </div>
+        <div class="project-list">
+          {projects.filter((project) => project.data.category === section.id).map((project, index) => (
+            <ProjectRow
+              id={project.id}
+              index={index + 1}
+              title={project.data.title}
+              description={project.data.description}
+              year={project.data.year}
+              image={project.data.thumbnail?.src ?? project.data.gallery[0]?.src ?? project.data.image}
+              imageAlt={project.data.thumbnail?.alt ?? project.data.gallery[0]?.alt ?? project.data.imageAlt}
+              screenshot={project.data.gallery.length > 0}
+              tags={project.data.tags}
+              links={project.data.links}
+            />
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="project-empty-state" hidden>No projects match your search. Try another keyword or clear the filters.</p>
+  </div>
 </BaseLayout>
+
+<script>
+  function initProjectFilters() {
+    const browser = document.querySelector<HTMLElement>("[data-project-browser]");
+    if (!browser || browser.dataset.initialized) return;
+    browser.dataset.initialized = "true";
+
+    const form = browser.querySelector<HTMLFormElement>("form")!;
+    const query = form.elements.namedItem("query") as HTMLInputElement;
+    const status = form.elements.namedItem("status") as HTMLSelectElement;
+    const tag = form.elements.namedItem("tag") as HTMLSelectElement;
+    const count = browser.querySelector<HTMLElement>(".project-result-count")!;
+    const empty = browser.querySelector<HTMLElement>(".project-empty-state")!;
+    const sections = Array.from(browser.querySelectorAll<HTMLElement>("[data-project-section]"));
+    const projects = Array.from(browser.querySelectorAll<HTMLElement>("[data-project]")).map((row) => ({
+      row,
+      text: row.dataset.search ?? "",
+      tags: JSON.parse(row.dataset.tags ?? "[]") as string[],
+      status: row.closest<HTMLElement>("[data-project-section]")!.dataset.projectSection,
+    }));
+
+    function update() {
+      const terms = query.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      let visible = 0;
+      for (const project of projects) {
+        const matches = terms.every((term) => project.text.includes(term))
+          && (status.value === "all" || project.status === status.value)
+          && (!tag.value || project.tags.includes(tag.value));
+        project.row.hidden = !matches;
+        if (matches) visible++;
+      }
+      for (const section of sections) {
+        section.hidden = !section.querySelector("[data-project]:not([hidden])");
+      }
+      count.textContent = `Showing ${visible} of ${projects.length} projects`;
+      empty.hidden = visible > 0;
+    }
+
+    form.hidden = false;
+    form.addEventListener("submit", (event) => event.preventDefault());
+    form.addEventListener("input", update);
+    form.addEventListener("change", update);
+    form.addEventListener("reset", () => {
+      query.value = "";
+      status.value = "all";
+      tag.value = "";
+      update();
+    });
+    update();
+  }
+
+  initProjectFilters();
+  document.addEventListener("astro:page-load", initProjectFilters);
+</script>
