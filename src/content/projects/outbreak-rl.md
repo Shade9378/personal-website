@@ -1,5 +1,5 @@
 ---
-title: "Reinforcement Learning for Resident Evil Outbreak File #2 - Multiple Projects"
+title: "Reinforcement Learning for Resident Evil Outbreak File #2"
 shortTitle: "Reinforcement Learning for Resident Evil Outbreak File #2"
 description: "A Gym environment and a reinforcement learning gameplay agent for Resident Evil Outbreak File #2."
 order: 4
@@ -11,13 +11,4 @@ tags:
   - Reverse Engineering
   - Reinforcement Learning
 links: []
-subprojects:
-  - title: "Gym Environment for Resident Evil Outbreak File #2"
-    links:
-      - label: GitHub
-        href: ""
-  - title: "Reinforcement Learning Gameplay Agent for Resident Evil Outbreak File #2"
-    links:
-      - label: GitHub
-        href: ""
 ---
