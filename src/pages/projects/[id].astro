@@ -143,12 +143,15 @@ const projectImage = image ? withBase(image) : undefined;
         {subproject.gallery.length > 0 && (
           <div class="project-gallery">
             {subproject.gallery.map((item) => (
+              <>
+              {item.heading && <h3>{item.heading}</h3>}
               <figure>
                 <a href={withBase(item.src)} target="_blank" rel="noreferrer" aria-label={`View full-size image: ${item.alt}`}>
                   <img src={withBase(item.src)} alt={item.alt} loading="lazy" />
                 </a>
                 {item.caption && <figcaption>{item.caption}</figcaption>}
               </figure>
+              </>
             ))}
           </div>
         )}
